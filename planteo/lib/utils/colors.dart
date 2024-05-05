@@ -7,3 +7,6 @@ const whiteColor = Color(0xFFFFFFFF);
 const greyColor = Color(0xFF7C8BA0);
 const blackColor = Color(0xFF000000);
 const purpleColor = Color(0xFF3461FD);
+const greenColor = Color(0xFF1DAB45);
+const darkGreenColor = Color(0xFF394434);
+const descriptionColor = Color(0xFF60655D);

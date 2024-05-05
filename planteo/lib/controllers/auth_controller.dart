@@ -84,7 +84,8 @@ class AuthController extends GetxController {
           Get.snackbar('Success', 'Login successful');
           getUserDetails();
           clearControllers();
-          Get.offAll(() => const Home());
+          // Get.offAll(() => const Home());
+          Get.offAll(() => const HomeScreen());
         } else {
           Get.snackbar('Error', jsonDecode(response.body)['error']);
         }

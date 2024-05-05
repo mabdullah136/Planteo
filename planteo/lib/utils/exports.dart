@@ -23,3 +23,6 @@ export 'package:planteo/utils/urls.dart';
 export 'package:planteo/screens/home_screen/home_screen.dart';
 export 'package:planteo/screens/home_screen/home.dart';
 export 'package:planteo/screens/profile_screen/profile_screen.dart';
+export 'package:planteo/utils/lists.dart';
+export 'package:planteo/widgets/plant_list_item.dart';
+export 'package:planteo/screens/plant_detail_screen/plant_detail_screen.dart';

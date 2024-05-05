@@ -6,20 +6,25 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AuthController());
     checkAuth() async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? token = prefs.getString('token');
       if (token == null) {
         Get.off(const OnboardingScreen());
       } else {
-        Get.off(const Home());
+        Get.off(const HomeScreen());
       }
     }
 
     checkAuth();
     return Scaffold(
-      body: Center(child: Image.asset(logo, width: 300, height: 300)),
+      body: Center(
+        child: Image.asset(
+          logo,
+          width: 300,
+          height: 300,
+        ),
+      ),
     );
   }
 }

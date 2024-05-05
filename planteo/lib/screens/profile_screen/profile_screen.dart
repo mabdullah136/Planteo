@@ -12,7 +12,7 @@ class ProfileSettingScreen extends StatelessWidget {
     log(controller.name);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Settings'),
+        title: const Text('My Profile'),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -32,8 +32,28 @@ class ProfileSettingScreen extends StatelessWidget {
                         const CircularProgressIndicator(),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
-                    width: 200,
+                    width: 100,
                     fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  // controller.name,
+                  'John Doe',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontFamily: bold,
+                  ),
+                ),
+                const Text(
+                  // controller.email,
+                  'johndoe@gmail.com',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: regular,
+                    color: greyColor,
                   ),
                 ),
                 const SizedBox(
