@@ -43,9 +43,10 @@ class Feedback(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     info = models.ForeignKey(UserSubmittedImage, on_delete=models.CASCADE)
     feedback_text = models.TextField(blank=True, null=True)
+    total_votes = models.PositiveIntegerField(default=0)
 
 
-class Like(models.Model):
+class Votes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     feedback_info = models.ForeignKey(Feedback, on_delete=models.CASCADE)
     likes = models.BooleanField(default=False, blank=True, null=True)

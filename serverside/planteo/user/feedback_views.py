@@ -1,6 +1,6 @@
-from .models import User,Feedback,UserSubmittedImage,Like
+from .models import User,Feedback,UserSubmittedImage,Votes
 from rest_framework import generics,status
-from .serializers import CreateUserQuerySerializer,CreateQuesyFeedbackSerializer,UserQuerySerializer,FeedbackTextSerializer,FeedbackLikeSerializer
+from .serializers import CreateUserQuerySerializer,CreateQuesyFeedbackSerializer,UserQuerySerializer,FeedbackTextSerializer,VotesSerializer
 from .permissions import IsOwnerOrAdmin,IsOwnerOrAdmin
 from rest_framework.response import Response
 from .permissions import IsQueryOwner
@@ -76,26 +76,36 @@ class CreateFeedbackViewSet(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CreateLikeViewSet(generics.CreateAPIView):
-    queryset = Like.objects.all()
-    serializer_class = FeedbackLikeSerializer
+class CreateVoteViewSet(generics.CreateAPIView):
+    queryset = Votes.objects.all()
+    serializer_class = VotesSerializer
 
     def create(self, request, *args, **kwargs):
-        feedback_info_id = request.data.get('feedback_info_id')  # Use the correct field name
+        feedback_info_id = request.data.get('feedback_info')
         user = request.user
 
+        if not feedback_info_id:
+            return Response({'error': 'feedback_info_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
-            like = Like.objects.get(feedback_info_id=feedback_info_id, user=user)
-            like.likes = not like.likes  # Toggle the likes field
-            like.save()
-            return Response({'message': 'Like status toggled successfully'}, status=status.HTTP_200_OK)
-        except Like.DoesNotExist:
+            vote = Votes.objects.get(feedback_info_id=feedback_info_id, user=user)
+            if vote.likes:
+                vote.likes = False
+                vote.feedback_info.total_votes -= 1
+            else:
+                vote.likes = True
+                vote.feedback_info.total_votes += 1
+            vote.save()
+            vote.feedback_info.save()
+            return Response({'message': 'Vote status toggled successfully'}, status=status.HTTP_200_OK)
+        except Votes.DoesNotExist:
             serializer = self.get_serializer(data=request.data)
             if serializer.is_valid():
-                serializer.save(user=user, likes=True)  # Set likes to True for new like
+                vote = serializer.save(user=user, likes=True)
+                vote.feedback_info.total_votes += 1
+                vote.feedback_info.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 
