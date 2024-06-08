@@ -1,0 +1,404 @@
+[
+    {
+        "CommonName": "Basil",
+        "Description": "Basil is a fragrant herb commonly used in Italian cuisine, known for its aromatic leaves and sweet flavor. It thrives in warm, sunny conditions."
+    },
+    {
+        "CommonName": "Parsley",
+        "Description": "Parsley is a versatile herb often used as a garnish or flavoring in dishes. It has a fresh, slightly peppery taste and is rich in vitamins A, C, and K."
+    },
+    {
+        "CommonName": "Mint",
+        "Description": "Mint is a refreshing herb with a cool, invigorating flavor, commonly used in teas, desserts, and savory dishes. It spreads rapidly and prefers moist, well-drained soil."
+    },
+    {
+        "CommonName": "Cilantro",
+        "Description": "Cilantro, also known as coriander, has a distinctive, citrusy flavor. It is widely used in Mexican and Asian cuisines, and its seeds are used as a spice."
+    },
+    {
+        "CommonName": "Thyme",
+        "Description": "Thyme is a hardy herb with a strong, earthy flavor, often used in Mediterranean cooking. It grows well in sunny locations with well-drained soil."
+    },
+    {
+        "CommonName": "Oregano",
+        "Description": "Oregano is a robust herb with a pungent, slightly bitter taste, commonly used in Italian and Greek cuisines. It thrives in full sun and well-drained soil."
+    },
+    {
+        "CommonName": "Rosemary",
+        "Description": "Rosemary is a woody, perennial herb with needle-like leaves and a strong, piney flavor. It is often used to season meats and stews and prefers sunny, dry conditions."
+    },
+    {
+        "CommonName": "Sage",
+        "Description": "Sage is an herb with soft, gray-green leaves and a savory, slightly peppery flavor. It is commonly used in poultry dishes and stuffing and grows well in sunny, well-drained areas."
+    },
+    {
+        "CommonName": "Chives",
+        "Description": "Chives are a member of the onion family, known for their mild, onion-like flavor. They are often used as a garnish or in salads and grow best in full sun with moist, well-drained soil."
+    },
+    {
+        "CommonName": "Dill",
+        "Description": "Dill is an aromatic herb with feathery leaves and a fresh, tangy flavor, commonly used in pickling and seasoning fish dishes. It prefers full sun and well-drained soil."
+    },
+    {
+        "CommonName": "Tarragon",
+        "Description": "Tarragon has a distinctive, slightly licorice-like flavor, often used in French cuisine. It thrives in well-drained, sandy loam and can tolerate full sun to partial shade."
+    },
+    {
+        "CommonName": "Marjoram",
+        "Description": "Marjoram is a sweet, aromatic herb with a mild, citrusy flavor, similar to oregano but less intense. It grows well in full sun and well-drained, loamy soil."
+    },
+    {
+        "CommonName": "Bay Laurel",
+        "Description": "Bay laurel is an evergreen shrub with aromatic leaves, used to flavor soups and stews. It prefers well-drained soil and can grow in full sun or partial shade."
+    },
+    {
+        "CommonName": "Lemon Balm",
+        "Description": "Lemon balm is a fragrant herb with a mild lemon scent, often used in teas and as a calming agent. It thrives in well-drained, loamy soil and can tolerate partial shade."
+    },
+    {
+        "CommonName": "Fennel",
+        "Description": "Fennel has a sweet, anise-like flavor and is used both as an herb and a vegetable. It prefers well-drained, sandy loam and full sun exposure."
+    },
+    {
+        "CommonName": "Garlic",
+        "Description": "Garlic is a pungent, flavorful bulb used in a variety of culinary dishes. It grows best in well-drained, sandy loam and full sun."
+    },
+    {
+        "CommonName": "Green Onions (Scallions)",
+        "Description": "Green onions, or scallions, are young onions harvested for their long, thin stems and mild flavor. They grow well in full sun or partial shade and well-drained, loamy soil."
+    },
+    {
+        "CommonName": "Chervil",
+        "Description": "Chervil is a delicate herb with a mild, anise-like flavor, often used in French cuisine. It prefers partial shade and well-drained, loamy soil."
+    },
+    {
+        "CommonName": "Sorrel",
+        "Description": "Sorrel is a leafy green with a sharp, tangy flavor, used in salads and soups. It grows best in well-drained, loamy soil and can tolerate full sun to partial shade."
+    },
+    {
+        "CommonName": "Stevia",
+        "Description": "Stevia is a sweet herb used as a natural sugar substitute. It grows well in well-drained, loamy soil and prefers full sun to partial shade."
+    },
+    {
+        "CommonName": "Arugula",
+        "Description": "Arugula is a peppery leafy green used in salads and garnishes. It thrives in cool weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Spinach",
+        "Description": "Spinach is a nutrient-rich leafy green, often used in salads and cooked dishes. It grows best in cool weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Kale",
+        "Description": "Kale is a hardy leafy green with a slightly bitter taste, rich in vitamins and minerals. It prefers cool weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Swiss Chard",
+        "Description": "Swiss chard is a colorful leafy green with a mild, slightly sweet taste, often used in salads and sautés. It grows well in well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Lettuce",
+        "Description": "Lettuce is a versatile leafy green used in salads and sandwiches. It prefers cool weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Radishes",
+        "Description": "Radishes are crisp, spicy root vegetables often used in salads and garnishes. They grow quickly in well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Beets",
+        "Description": "Beets are root vegetables with a sweet, earthy flavor, used in salads and cooked dishes. They prefer well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Carrots",
+        "Description": "Carrots are crunchy, sweet root vegetables, rich in beta-carotene. They grow best in well-drained, sandy soil."
+    },
+    {
+        "CommonName": "Turnips",
+        "Description": "Turnips are root vegetables with a mildly spicy flavor, used in salads and cooked dishes. They grow well in well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Rutabaga",
+        "Description": "Rutabaga is a sweet, nutty root vegetable, often used in soups and stews. It grows best in well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Peas",
+        "Description": "Peas are sweet, tender legumes often used in soups and salads. They prefer cool weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Green Beans",
+        "Description": "Green beans are crisp, tender legumes used in a variety of dishes. They grow well in warm weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Broad Beans",
+        "Description": "Broad beans are large, nutritious legumes often used in soups and stews. They prefer cool weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Lima Beans",
+        "Description": "Lima beans are starchy, buttery legumes used in soups and stews. They grow best in warm weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Chickpeas",
+        "Description": "Chickpeas are nutty, protein-rich legumes used in a variety of dishes, including hummus. They prefer warm weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Soybeans",
+        "Description": "Soybeans are versatile legumes used for tofu, soy milk, and other products. They grow well in warm weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Cucumbers",
+        "Description": "Cucumbers are refreshing, crunchy vegetables often used in salads and pickles. They grow best in warm weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Zucchini",
+        "Description": "Zucchini is a tender summer squash used in a variety of dishes. It prefers warm weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Squash (Summer and Winter)",
+        "Description": "Squash includes both summer and winter varieties, each with a unique flavor and texture. They grow best in warm weather and well-drained, fertile soil."
+    },
+    {
+        "CommonName": "Pumpkins",
+        "Description": "Pumpkins are large, round, orange squashes with sweet, fibrous flesh. They are used in pies, soups, and as decoration."
+    },
+    {
+        "CommonName": "Tomatoes",
+        "Description": "Tomatoes are juicy, red fruits used in a variety of dishes, from salads to sauces. They thrive in warm, sunny conditions."
+    },
+    {
+        "CommonName": "Bell Peppers",
+        "Description": "Bell peppers are sweet, crunchy vegetables available in various colors, including green, red, and yellow. They are used in salads, stir-fries, and as snacks."
+    },
+    {
+        "CommonName": "Hot Peppers (Chili)",
+        "Description": "Hot peppers, or chilis, are spicy vegetables used to add heat to dishes. They come in many varieties, each with a unique level of spiciness."
+    },
+    {
+        "CommonName": "Eggplants",
+        "Description": "Eggplants are large, purple vegetables with a mild, slightly bitter flavor. They are often used in Mediterranean and Asian cuisines."
+    },
+    {
+        "CommonName": "Okra",
+        "Description": "Okra is a green, pod-shaped vegetable with a mild taste and a slightly slimy texture. It is commonly used in soups and stews."
+    },
+    {
+        "CommonName": "Broccoli",
+        "Description": "Broccoli is a nutrient-rich vegetable with green florets and a slightly bitter taste. It is often steamed, roasted, or used in stir-fries."
+    },
+    {
+        "CommonName": "Cauliflower",
+        "Description": "Cauliflower is a versatile vegetable with a mild, nutty flavor. It can be roasted, steamed, or used as a low-carb substitute for grains."
+    },
+    {
+        "CommonName": "Cabbage",
+        "Description": "Cabbage is a leafy green vegetable with a dense head. It is used in salads, coleslaw, and fermented dishes like sauerkraut."
+    },
+    {
+        "CommonName": "Brussels Sprouts",
+        "Description": "Brussels sprouts are small, cabbage-like vegetables with a slightly bitter taste. They are often roasted or steamed."
+    },
+    {
+        "CommonName": "Kohlrabi",
+        "Description": "Kohlrabi is a bulbous vegetable with a mild, sweet flavor, similar to broccoli stems. It can be eaten raw or cooked."
+    },
+    {
+        "CommonName": "Celery",
+        "Description": "Celery is a crunchy, fibrous vegetable often used in salads, soups, and as a low-calorie snack. It has a mild, slightly peppery flavor."
+    },
+    {
+        "CommonName": "Leeks",
+        "Description": "Leeks are a member of the onion family with a mild, sweet flavor. They are often used in soups, stews, and savory dishes."
+    },
+    {
+        "CommonName": "Asparagus",
+        "Description": "Asparagus is a tender, green vegetable with a slightly bitter taste. It is often grilled, steamed, or roasted."
+    },
+    {
+        "CommonName": "Rhubarb",
+        "Description": "Rhubarb is a tart vegetable often used in desserts, such as pies and crumbles. Only the stalks are edible; the leaves are toxic."
+    },
+    {
+        "CommonName": "Artichokes",
+        "Description": "Artichokes are thistle-like vegetables with tender, edible hearts and leaves. They are often steamed or boiled and served with dips."
+    },
+    {
+        "CommonName": "Parsnips",
+        "Description": "Parsnips are sweet, root vegetables similar to carrots but with a nutty flavor. They are often roasted or used in soups and stews."
+    },
+    {
+        "CommonName": "Sweet Potatoes",
+        "Description": "Sweet potatoes are starchy, sweet root vegetables often used in both savory and sweet dishes. They are rich in vitamins and fiber."
+    },
+    {
+        "CommonName": "Potatoes",
+        "Description": "Potatoes are versatile, starchy tubers used in a wide range of dishes, from mashed potatoes to fries. They grow best in cool weather."
+    },
+    {
+        "CommonName": "Yams",
+        "Description": "Yams are starchy tubers similar to sweet potatoes but generally drier and less sweet. They are commonly used in African and Caribbean cuisines."
+    },
+    {
+        "CommonName": "Corn",
+        "Description": "Corn is a sweet, starchy vegetable often eaten on the cob or used in various dishes. It thrives in warm, sunny conditions."
+    },
+    {
+        "CommonName": "Onions",
+        "Description": "Onions are pungent, flavorful bulbs used as a base in many savory dishes. They come in various types, including yellow, red, and white."
+    },
+    {
+        "CommonName": "Shallots",
+        "Description": "Shallots are small, mild-flavored onions often used in gourmet cooking. They have a delicate, sweet taste and are used raw or cooked."
+    },
+    {
+        "CommonName": "Garlic Chives",
+        "Description": "Garlic chives have a mild garlic flavor and are used in Asian cuisine. They are similar to regular chives but with a subtle garlic aroma."
+    },
+    {
+        "CommonName": "Watercress",
+        "Description": "Watercress is a peppery, aquatic plant used in salads and as a garnish. It is rich in vitamins and minerals."
+    },
+    {
+        "CommonName": "Endive",
+        "Description": "Endive is a bitter leafy green used in salads and as a garnish. It has crisp leaves and is often used in gourmet dishes."
+    },
+    {
+        "CommonName": "Bok Choy",
+        "Description": "Bok choy is a type of Chinese cabbage with tender, crunchy stalks and mild leaves. It is commonly used in stir-fries and soups."
+    },
+    {
+        "CommonName": "Mustard Greens",
+        "Description": "Mustard greens are peppery, leafy vegetables often used in Southern and Asian cuisines. They are rich in vitamins and minerals."
+    },
+    {
+        "CommonName": "Collard Greens",
+        "Description": "Collard greens are hardy, leafy vegetables with a slightly bitter taste. They are often cooked and used in Southern cuisine."
+    },
+    {
+        "CommonName": "Tatsoi",
+        "Description": "Tatsoi is a mild, Asian leafy green similar to bok choy. It is often used in salads, stir-fries, and soups."
+    },
+    {
+        "CommonName": "Mizuna",
+        "Description": "Mizuna is a Japanese leafy green with a mild, peppery flavor. It is often used in salads and stir-fries."
+    },
+    {
+        "CommonName": "Malabar Spinach",
+        "Description": "Malabar spinach is a tropical leafy green with a slightly mucilaginous texture. It is used in salads and cooked dishes."
+    },
+    {
+        "CommonName": "Purslane",
+        "Description": "Purslane is a succulent leafy green with a slightly tangy flavor. It is rich in omega-3 fatty acids and used in salads and soups."
+    },
+    {
+        "CommonName": "Amaranth",
+        "Description": "Amaranth is a leafy green with a slightly sweet, earthy flavor. It is used in salads and cooked dishes and is rich in nutrients."
+    },
+    {
+        "CommonName": "Sorrel",
+        "Description": "Sorrel is a tangy, leafy green used in salads and soups. It has a sharp, lemony flavor and is rich in vitamins and minerals."
+    },
+    {
+        "CommonName": "Dandelion Greens",
+        "Description": "Dandelion greens are bitter, nutrient-rich leaves used in salads and teas. They are known for their health benefits and detoxifying properties."
+    },
+    {
+        "CommonName": "Nasturtium",
+        "Description": "Nasturtium is a flowering plant with edible leaves and flowers that have a peppery flavor. They are often used in salads and as garnishes."
+    },
+    {
+        "CommonName": "Radicchio",
+        "Description": "Radicchio is a bitter, red leafy vegetable often used in salads. It adds a colorful and flavorful touch to dishes."
+    },
+    {
+        "CommonName": "Fiddlehead Ferns",
+        "Description": "Fiddlehead ferns are the young, coiled fronds of ferns with a delicate, grassy flavor. They are often sautéed or steamed."
+    },
+    {
+        "CommonName": "Gooseberries",
+        "Description": "Gooseberries are tart, green or red berries used in desserts, jams, and sauces. They are rich in vitamins and antioxidants."
+    },
+    {
+        "CommonName": "Strawberries",
+        "Description": "Strawberries are sweet, red berries with a juicy texture and a characteristic aroma. They are enjoyed fresh, in desserts, and in preserves."
+    },
+    {
+        "CommonName": "Blueberries",
+        "Description": "Blueberries are small, sweet, and slightly tart berries packed with antioxidants. They are commonly used in baking, cereals, and smoothies."
+    },
+    {
+        "CommonName": "Raspberries",
+        "Description": "Raspberries are delicate, sweet-tart berries with a rich red color. They are popular in desserts, jams, and eaten fresh."
+    },
+    {
+        "CommonName": "Blackberries",
+        "Description": "Blackberries are juicy, dark purple berries with a sweet and slightly tart flavor. They are used in pies, jams, and eaten fresh."
+    },
+    {
+        "CommonName": "Currants",
+        "Description": "Currants are small, tart berries that come in red, black, and white varieties. They are used in jellies, sauces, and baking."
+    },
+    {
+        "CommonName": "Grapes",
+        "Description": "Grapes are sweet, juicy berries that grow in clusters. They can be eaten fresh, dried as raisins, or used to make wine."
+    },
+    {
+        "CommonName": "Melons",
+        "Description": "Melons, including cantaloupe and honeydew, are sweet, juicy fruits with a high water content. They are often eaten fresh or in fruit salads."
+    },
+    {
+        "CommonName": "Watermelon",
+        "Description": "Watermelon is a large, juicy fruit with sweet, red flesh and a high water content. It is a refreshing summer treat."
+    },
+    {
+        "CommonName": "Ground Cherries",
+        "Description": "Ground cherries, or physalis, are small, yellow-orange fruits with a sweet-tart flavor, enclosed in a papery husk. They are used in desserts and jams."
+    },
+    {
+        "CommonName": "Kiwi",
+        "Description": "Kiwi is a small, brown, fuzzy fruit with bright green flesh and a sweet-tart flavor. It is eaten fresh or used in fruit salads and desserts."
+    },
+    {
+        "CommonName": "Pineapple Guava",
+        "Description": "Pineapple guava, or feijoa, is a green, oval fruit with a sweet, aromatic flavor resembling pineapple and guava. It is eaten fresh or used in desserts."
+    },
+    {
+        "CommonName": "Pomegranate",
+        "Description": "Pomegranate is a round fruit with a thick, red skin and numerous juicy, edible seeds. It has a sweet-tart flavor and is used in juices, salads, and desserts."
+    },
+    {
+        "CommonName": "Passionfruit",
+        "Description": "Passionfruit is a tropical fruit with a tough outer rind and sweet-tart, aromatic pulp filled with seeds. It is used in drinks, desserts, and sauces."
+    },
+    {
+        "CommonName": "Lemongrass",
+        "Description": "Lemongrass is a tropical grass with a strong lemon flavor and aroma. It is commonly used in Asian cuisine, teas, and as a herbal remedy."
+    },
+    {
+        "CommonName": "Ginger",
+        "Description": "Ginger is a spicy, aromatic root used in cooking and baking. It is also known for its medicinal properties, particularly for digestive health."
+    },
+    {
+        "CommonName": "Turmeric",
+        "Description": "Turmeric is a bright yellow-orange root with a warm, bitter flavor. It is used as a spice in cooking and has anti-inflammatory properties."
+    },
+    {
+        "CommonName": "Horseradish",
+        "Description": "Horseradish is a pungent root vegetable used as a condiment. It has a strong, spicy flavor and is often used in sauces and spreads."
+    },
+    {
+        "CommonName": "Comfrey",
+        "Description": "Comfrey is a leafy herb with large, hairy leaves. It is traditionally used in herbal medicine for its healing properties."
+    },
+    {
+        "CommonName": "Lovage",
+        "Description": "Lovage is an herb with a strong celery-like flavor. Its leaves, stems, and seeds are used in soups, stews, and salads."
+    },
+    {
+        "CommonName": "Fenugreek",
+        "Description": "Fenugreek is an herb with aromatic seeds and leaves used in cooking and traditional medicine. It has a slightly bitter, maple syrup-like flavor."
+    },
+    {
+        "CommonName": "Chamomile",
+        "Description": "Chamomile is a flowering herb known for its calming properties. Its dried flowers are used to make herbal tea and in natural remedies."
+    }
+]
+
+

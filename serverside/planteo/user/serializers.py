@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from djoser.serializers import UserSerializer as BaseUserSerializer,UserCreateSerializer as BaseUserCreateSerializer
 from django.contrib.auth.password_validation import validate_password
-from .models import User,UserSubmittedImage,Feedback,Like
+from .models import User,UserSubmittedImage,Feedback,Votes
 from django.conf import settings
 from rest_framework.exceptions import ValidationError
 
@@ -76,7 +76,7 @@ class FeedbackTextSerializer(serializers.ModelSerializer):
         model = Feedback
         fields=['info','user','feedback_text']
 
-class FeedbackLikeSerializer(serializers.ModelSerializer):
+class VotesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Like
-        fields=['feedback_info','user','likes']
+        model = Votes
+        fields=['feedback_info','likes']
