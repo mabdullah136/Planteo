@@ -12,7 +12,7 @@ class SplashScreen extends StatelessWidget {
       if (token == null) {
         Get.off(const OnboardingScreen());
       } else {
-        Get.off(const HomeScreen());
+        Get.off(const Home());
       }
     }
 

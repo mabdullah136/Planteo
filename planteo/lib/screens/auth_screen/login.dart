@@ -25,56 +25,28 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 2 - 20,
-                  child: ElevatedButton.icon(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.2,
-                      backgroundColor: whiteColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: const EdgeInsets.all(20),
-                    ),
-                    icon: Image.asset(facebook, width: 20, height: 20),
-                    label: const Text(
-                      '  Facebook',
-                      style: TextStyle(
-                        color: blackColor,
-                        fontFamily: medium,
-                        fontSize: 16,
-                      ),
-                    ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  elevation: 0.2,
+                  backgroundColor: whiteColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.all(20),
+                ),
+                icon: Image.asset(google, width: 20, height: 20),
+                label: const Text(
+                  '  Google',
+                  style: TextStyle(
+                    color: blackColor,
+                    fontFamily: medium,
+                    fontSize: 16,
                   ),
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 2 - 20,
-                  child: ElevatedButton.icon(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.2,
-                      backgroundColor: whiteColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: const EdgeInsets.all(20),
-                    ),
-                    icon: Image.asset(google, width: 20, height: 20),
-                    label: const Text(
-                      '  Google',
-                      style: TextStyle(
-                        color: blackColor,
-                        fontFamily: medium,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
             const SizedBox(
               height: 20,

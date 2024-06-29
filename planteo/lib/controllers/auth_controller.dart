@@ -85,7 +85,7 @@ class AuthController extends GetxController {
           getUserDetails();
           clearControllers();
           // Get.offAll(() => const Home());
-          Get.offAll(() => const HomeScreen());
+          Get.offAll(() => const Home());
         } else {
           Get.snackbar('Error', jsonDecode(response.body)['error']);
         }
@@ -213,5 +213,41 @@ class AuthController extends GetxController {
     confirmPasswordController.clear();
     nameController.clear();
     otpController.clear();
+  }
+
+  logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    Get.offAll(() => const LoginScreen());
+  }
+
+  updateProfile() async {
+    try {
+      if (firstNameController.text.isEmpty ||
+          lastNameController.text.isEmpty ||
+          phoneController.text.isEmpty) {
+        Get.snackbar('Error', 'All fields are required');
+        return;
+      }
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final body = {
+        'first_name': firstNameController.text,
+        'last_name': lastNameController.text,
+        // 'email': emailController.text,
+        'phone': phoneController.text
+      };
+      final url = Uri.parse('$baseUrl/user/update/');
+      final response = await http.post(url, body: body, headers: {
+        'Authorization': 'JWT $token',
+      });
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'Record updated successfully');
+      } else {
+        Get.snackbar('Error', 'Something went wrong');
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
   }
 }

@@ -1,4 +1,4 @@
-const String logo = 'assets/images/logo.png';
+const String logo = 'assets/images/logo.jpg';
 const String onBoarding = 'assets/images/Background.png';
 
 const String google = 'assets/icons/Google.png';

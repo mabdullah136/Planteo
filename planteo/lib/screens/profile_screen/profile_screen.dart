@@ -13,6 +13,15 @@ class ProfileSettingScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.logout();
+            },
+            icon: const Icon(Icons.logout_rounded),
+            tooltip: 'Logout',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -75,14 +84,14 @@ class ProfileSettingScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                InputField(
-                  title: 'Email',
-                  hintText: 'Enter your email',
-                  controller: controller.emailController,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                // InputField(
+                //   title: 'Email',
+                //   hintText: 'Enter your email',
+                //   controller: controller.emailController,
+                // ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
                 InputField(
                   title: 'Phone',
                   hintText: 'Enter your phone number',
@@ -98,7 +107,7 @@ class ProfileSettingScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // controller.updateProfile();
+                      controller.updateProfile();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kPrimaryColor,
