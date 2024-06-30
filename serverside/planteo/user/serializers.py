@@ -56,10 +56,27 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         model=User
         fields=['id','first_name','last_name','phone','image','bio']
 
+class UserShortDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields=['first_name','last_name']
+
 class CreateUserQuerySerializer(serializers.ModelSerializer):
     class Meta:
         model=UserSubmittedImage
-        fields=['user','image','subject','description']
+        fields=['image','subject','description']
+
+class QueryDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=UserSubmittedImage
+        fields=['image','subject','description','upload_date']
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        for key, value in data.items():
+            if value is None:
+                data[key] = ''
+        return data
 
 class CreateQuesyFeedbackSerializer(serializers.ModelSerializer):
     class Meta:
@@ -71,10 +88,17 @@ class UserQuerySerializer(serializers.ModelSerializer):
         model = UserSubmittedImage
         fields = '__all__'
 
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     for key, value in data.items():
+    #         if value is None:
+    #             data[key] = ''
+    #     return data
+
 class FeedbackTextSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
-        fields=['info','user','feedback_text']
+        fields=['id','info','feedback_text','total_votes']
 
 class VotesSerializer(serializers.ModelSerializer):
     class Meta:

@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 from datetime import timedelta
 
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# FIREBASE_CREDENTIALS_PATH = os.path.join(BASE_DIR, 'path/to/your/firebase/credentials.json')
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -26,7 +30,7 @@ SECRET_KEY = 'django-insecure-mo9+_pikd8e*eqjzp%b0-e5jiskcr5izlaa7s!oxdluwf2y@7&
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['8028-182-185-203-161.ngrok-free.app','127.0.0.1']
+ALLOWED_HOSTS = ['*','127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -84,6 +88,17 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # Redis server location
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -123,6 +138,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK={
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,  
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -132,6 +149,7 @@ REST_FRAMEWORK={
 }
 
 DJOSER = {
+
     'SERIALIZERS': {
         'user_create': 'user.serializers.UserCreateSerializer',
         'current_user': 'user.serializers.UserSerializer',

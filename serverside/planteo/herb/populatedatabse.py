@@ -1,59 +1,61 @@
-import os
-import json
-from .models import Herb,Month
-from django.db import IntegrityError
+# import os
+# import json
+# from .models import Herb,Month
+# from django.db import IntegrityError
 
-file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'plantdataset2.txt')
+# file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'Planteo.txt')
 
-if os.path.exists(file_path):
-    print('Found')
-else:
-    print("File not found")
+# if os.path.exists(file_path):
+#     print('Found')
+# else:
+#     print("File not found")
 
 
-def save_herbs_from_file(file_path):
-    if file_path:
-        try:
-            with open(file_path, "r") as file:
-                herbs_data = json.load(file)
+# def save_herbs_from_file(file_path):
+#     if file_path:
+#         try:
+#             with open(file_path, "r") as file:
+#                 herbs_data = json.load(file)
                 
-                for herb_data in herbs_data:
-                    # Check if herb with the same common name already exists
-                    if not Herb.objects.filter(common_name=herb_data['CommonName']).exists():
-                        herb = Herb(
-                            common_name=herb_data['CommonName'],
-                            scientific_name=herb_data['ScientificName'],
-                            optimal_soil_ph_range=herb_data['OptimalSoilPHRange'],
-                            soil_type_preferences=herb_data['SoilTypePreferences'],
-                            light_requirements=herb_data['LightRequirements'],
-                            water_requirements=herb_data['WaterRequirements'],
-                            nutrient_requirements=herb_data['NutrientRequirements'],
-                            temperature_range=herb_data['TemperatureRange'],
-                            humidity_tolerance=herb_data['HumidityTolerance'],
-                            planting_depth_and_spacing=herb_data['PlantingDepthAndSpacing']
-                        )
-                        herb.save()
+#                 for herb_data in herbs_data:
+#                     if not Herb.objects.filter(common_name=herb_data['CommonName']).exists():
+#                         herb = Herb(
+#                             common_name=herb_data['CommonName'],
+#                             scientific_name=herb_data['ScientificName'],
+#                             optimal_soil_ph_range=herb_data['OptimalSoilPHRange'],
+#                             soil_type_preferences=herb_data['SoilTypePreferences'],
+#                             light_requirements=herb_data['LightRequirements'],
+#                             water_requirements=herb_data['WaterRequirements'],
+#                             nutrient_requirements=herb_data['NutrientRequirements'],
+#                             temperature_range=herb_data['TemperatureRange'],
+#                             humidity_tolerance=herb_data['HumidityTolerance'],
+#                             planting_depth_and_spacing=herb_data['PlantingDepthAndSpacing'],
+#                             description = herb_data["Description"],
+#                             image = herb_data["image"]
 
-                        for month_name in herb_data['SeasonInPakistan']:
-                            month, created = Month.objects.get_or_create(name=month_name)
-                            herb.season_in_pakistan.add(month)
+#                         )
+#                         herb.save()
+
+#                         for month_name in herb_data['SeasonInPakistan']:
+#                             month, created = Month.objects.get_or_create(name=month_name)
+#                             herb.season_in_pakistan.add(month)
                         
-                        herb.save()
-                    else:
-                        print(f"Herb with common name '{herb_data['CommonName']}' already exists and will not be added again.")
+#                         herb.save()
+#                     else:
+#                         print(f"Herb with common name '{herb_data['CommonName']}' already exists and will not be added again.")
 
-            print("Herbs saved successfully!")
-        except FileNotFoundError:
-            print(f"File not found at path: {file_path}")
-        except json.JSONDecodeError:
-            print("Error decoding JSON from the file.")
-        except IntegrityError as e:
-            print(f"Integrity error occurred: {e}")
-    else:
-        print("File path is empty.")
+#             print("Herbs saved successfully!")
+#         except FileNotFoundError:
+#             print(f"File not found at path: {file_path}")
+#         except json.JSONDecodeError:
+#             print("Error decoding JSON from the file.")
+#         except IntegrityError as e:
+#             print(f"Integrity error occurred: {e}")
+#     else:
+#         print("File path is empty.")
 
 
-save_herbs_from_file(file_path)
+# save_herbs_from_file(file_path)
 
 # def update_herb_descriptions(file_path):
 #     file_path = os.path.abspath(file_path)
@@ -136,3 +138,56 @@ save_herbs_from_file(file_path)
 # generate_location_dataset(100)
 
 # herb/views.py
+
+# import os
+# import json
+# from .models import Herb,Month
+# from django.db import IntegrityError
+
+# file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'Planteo.txt')
+
+# if os.path.exists(file_path):
+#     print('Found')
+# else:
+#     print("File not found")
+
+
+# def save_herbs_from_file(file_path):
+#     if file_path:
+#         try:
+#             with open(file_path, "r") as file:
+#                 herbs_data = json.load(file)
+                
+#                 for herb_data in herbs_data:
+#                     herb, created = Herb.objects.get_or_create(common_name=herb_data['CommonName'])
+#                     herb.scientific_name = herb_data['ScientificName']
+#                     herb.optimal_soil_ph_range = herb_data['OptimalSoilPHRange']
+#                     herb.soil_type_preferences = herb_data['SoilTypePreferences']
+#                     herb.light_requirements = herb_data['LightRequirements']
+#                     herb.water_requirements = herb_data['WaterRequirements']
+#                     herb.nutrient_requirements = herb_data['NutrientRequirements']
+#                     herb.temperature_range = herb_data['TemperatureRange']
+#                     herb.humidity_tolerance = herb_data['HumidityTolerance']
+#                     herb.planting_depth_and_spacing = herb_data['PlantingDepthAndSpacing']
+#                     herb.description = herb_data["Description"]
+#                     herb.image = herb_data["image"]
+#                     herb.save()
+
+#                     herb.season_in_pakistan.clear()  # Clear existing months
+#                     for month_name in herb_data['SeasonInPakistan']:
+#                         month, created = Month.objects.get_or_create(name=month_name)
+#                         herb.season_in_pakistan.add(month)
+                    
+#                     herb.save()
+#             print("Herbs saved successfully!")
+#         except FileNotFoundError:
+#             print(f"File not found at path: {file_path}")
+#         except json.JSONDecodeError:
+#             print("Error decoding JSON from the file.")
+#         except IntegrityError as e:
+#             print(f"Integrity error occurred: {e}")
+#     else:
+#         print("File path is empty.")
+
+
+# save_herbs_from_file(file_path)
