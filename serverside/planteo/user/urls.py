@@ -14,5 +14,8 @@ urlpatterns=[
     path('deletequery/<int:pk>/', feedback_views.UserQueryDeleteViewSet.as_view(), name='delete_query'),
     path('listofequery/', feedback_views.ListOfUserQueryViewSet.as_view(), name='query_list'),
     path('createfeedback/',feedback_views.CreateFeedbackViewSet.as_view(),name='create_query_feedback'),
-    path('feedback/like/',feedback_views.CreateVoteViewSet.as_view(),name='like_query_feedback')
+    path('feedback/like/',feedback_views.CreateVoteViewSet.as_view(),name='like_query_feedback'),
+    path('queries/<int:query_id>/', feedback_views.QueryViewSet.as_view(), name='query-detail'),
+
+    
 ]

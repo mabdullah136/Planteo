@@ -17,7 +17,6 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth.password_validation import validate_password
 
-
 class UserCreateViewSet(generics.CreateAPIView):
     queryset=User.objects.all()
     serializer_class=UserCreateSerializer
