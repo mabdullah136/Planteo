@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:planteo/controllers/forum_controller.dart';
+import 'package:planteo/models/forum_model.dart';
 import 'package:planteo/screens/Forum/forum_detail_screen.dart';
 import 'package:planteo/screens/Forum/forum_form_screen.dart';
 import 'package:planteo/utils/exports.dart';
@@ -11,37 +14,75 @@ class ForumScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final herbsController = Get.put(ForumController());
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Forum',
-            style: TextStyle(
-              fontSize: 28,
-              fontFamily: regular,
-              color: greenColor,
+      appBar: AppBar(
+        title: const Text(
+          'Forum',
+          style: TextStyle(
+            fontSize: 28,
+            fontFamily: regular,
+            color: greenColor,
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(const ForumFormScreen());
+        },
+        backgroundColor: greenColor,
+        child: const Icon(
+          Icons.add,
+          color: whiteColor,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              decoration: BoxDecoration(
+                color: greenColor.withOpacity(0.1),
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.search,
+                    color: greenColor,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      controller: herbsController.forumSearchController,
+                      onChanged: (value) {
+                        // The search query is already being updated in the controller
+                      },
+                      decoration: const InputDecoration(
+                        hintText: 'Search',
+                        border: InputBorder.none,
+                        // contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Get.to(const ForumFormScreen());
-          },
-          backgroundColor: greenColor,
-          child: const Icon(
-            Icons.add,
-            color: whiteColor,
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                  child: StreamBuilder(
+            Expanded(
+              child: StreamBuilder<List<ForumModel>>(
                 stream: herbsController.getForum(),
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text('No data found'),
                     );
                   } else {
                     return ListView.builder(
@@ -59,10 +100,12 @@ class ForumScreen extends StatelessWidget {
                     );
                   }
                 },
-              )),
-            ],
-          ),
-        ));
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

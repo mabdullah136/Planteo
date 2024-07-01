@@ -12,7 +12,14 @@ class ProfileSettingScreen extends StatelessWidget {
     log(controller.name);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Profile'),
+        title: const Text(
+          'My Profile',
+          style: TextStyle(
+            fontSize: 28,
+            fontFamily: regular,
+            color: greenColor,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -33,33 +40,39 @@ class ProfileSettingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10000),
-                  child: CachedNetworkImage(
-                    imageUrl: 'https://via.placeholder.com/150',
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    width: 100,
-                    fit: BoxFit.cover,
+                InkWell(
+                  onTap: () {
+                    controller.pickImage(context);
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10000),
+                    child: CachedNetworkImage(
+                      imageUrl: '$baseUrl${controller.image}',
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  // controller.name,
-                  'John Doe',
-                  style: TextStyle(
+                Text(
+                  controller.name,
+                  // 'John Doe',
+                  style: const TextStyle(
                     fontSize: 16,
                     fontFamily: bold,
                   ),
                 ),
-                const Text(
-                  // controller.email,
-                  'johndoe@gmail.com',
-                  style: TextStyle(
+                Text(
+                  controller.email,
+                  // 'johndoe@gmail.com',
+                  style: const TextStyle(
                     fontSize: 14,
                     fontFamily: regular,
                     color: greyColor,

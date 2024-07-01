@@ -8,6 +8,7 @@ import 'package:planteo/models/forum_details.dart';
 import 'package:planteo/models/forum_model.dart';
 import 'package:planteo/utils/exports.dart';
 import 'package:http/http.dart' as http;
+import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ForumController extends GetxController {
@@ -16,11 +17,25 @@ class ForumController extends GetxController {
   final imgpath = ''.obs;
 
   final forumDetail = <ForumModel>[].obs;
+  final forumSearchController = TextEditingController();
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
 
   final feebackController = TextEditingController();
+  final _searchQuery = BehaviorSubject<String>();
+
+  Stream<String> get searchQueryStream => _searchQuery.stream;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Add a listener to the TextEditingController to update the search query
+    _searchQuery.add('');
+    forumSearchController.addListener(() {
+      _searchQuery.add(forumSearchController.text);
+    });
+  }
 
   checkPermission() async {
     final status = await Permission.camera.status;
@@ -43,6 +58,7 @@ class ForumController extends GetxController {
         }
 
         imgpath.value = img.path;
+        log(img.path);
         // sendImage(channel, img.path, username, secondUserId);
         // VxToast.show(context, msg: "Image selected");
         Get.snackbar('', 'Image Selected');
@@ -59,12 +75,86 @@ class ForumController extends GetxController {
     }
   }
 
+  // Stream<List<ForumModel>> getForum() async* {
+  //   try {
+  //     isLoading(true);
+  //     final url = forumSearchController.text.isNotEmpty
+  //         ? Uri.parse(
+  //             '$baseUrl/user/listofequery/?search=${forumSearchController.text}')
+  //         : Uri.parse('$baseUrl/user/listofequery/');
+
+  //     final response = await http.get(url);
+  //     if (response.statusCode == 200) {
+  //       final List<ForumModel> forum = forumModelFromJson(response.body);
+  //       yield forum;
+  //     } else {
+  //       // Handle the error case
+  //     }
+  //   } catch (e) {
+  //     Get.snackbar('Error', e.toString());
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
   Stream<List<ForumModel>> getForum() async* {
+    log('getForum');
+    await for (final query in _searchQuery) {
+      log('query: $query');
+      try {
+        isLoading(true);
+        final url = query.isNotEmpty
+            ? Uri.parse('$baseUrl/user/listofequery/?search=$query')
+            : Uri.parse('$baseUrl/user/listofequery/');
+
+        log('url: $url');
+
+        final response = await http.get(url);
+        log('response${response.statusCode}');
+        if (response.statusCode == 200) {
+          final List<ForumModel> forum = forumModelFromJson(response.body);
+          yield forum;
+        } else {
+          final List<ForumModel> forum = [];
+          yield forum;
+        }
+      } catch (e) {
+        Get.snackbar('Error', e.toString());
+      } finally {
+        isLoading(false);
+      }
+    }
+  }
+
+  likeFeedback(String feedback) async {
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final url = Uri.parse('$baseUrl/user/feedback/like/');
+      final response = await http.post(url,
+          headers: {'Authorization': 'JWT $token'},
+          body: {'feedback_info': feedback});
+      log(response.body);
+
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'Feedback liked successfully');
+      } else {
+        Get.snackbar('Error', 'Something went wrong');
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Stream<List<ForumModel>> getForumBySearch() async* {
+    log(forumSearchController.text.toString());
+    try {
+      log(forumSearchController.text);
       isLoading(true);
-      final url = Uri.parse('$baseUrl/user/listofequery/');
+      final query = forumSearchController.text;
+      final url = Uri.parse('$baseUrl/user/listofequery/?search=$query');
 
       final response = await http.get(url);
+
       if (response.statusCode == 200) {
         final List<ForumModel> forum = forumModelFromJson(response.body);
         yield forum;
@@ -143,6 +233,27 @@ class ForumController extends GetxController {
     }
   }
 
+  likeForum(int id) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final url = Uri.parse('$baseUrl/user/likequery/');
+      final response = await http.post(url,
+          headers: {'Authorization': 'JWT $token'},
+          body: {'query_id': id.toString()});
+
+      log(response.body);
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'Forum liked successfully');
+        getForumDetail(id);
+      } else {
+        Get.snackbar('Error', 'Something went wrong');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred while liking forum');
+    }
+  }
+
   createFeedback(int id) async {
     try {
       if (feebackController.text.isEmpty) {
@@ -171,6 +282,13 @@ class ForumController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', 'An error occurred while creating feedback');
     }
+  }
+
+  @override
+  void onClose() {
+    forumSearchController.dispose();
+    _searchQuery.close();
+    super.onClose();
   }
 
   // Stream<ForumDetailModel> getForumDetail(String id) async* {

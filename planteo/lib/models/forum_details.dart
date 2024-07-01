@@ -39,24 +39,24 @@ class ForumDetail {
 }
 
 class Feedback {
-  int info;
+  int id;
   String feedbackText;
   int totalVotes;
 
   Feedback({
-    required this.info,
+    required this.id,
     required this.feedbackText,
     required this.totalVotes,
   });
 
   factory Feedback.fromJson(Map<String, dynamic> json) => Feedback(
-        info: json["info"],
+        id: json["id"],
         feedbackText: json["feedback_text"],
         totalVotes: json["total_votes"],
       );
 
   Map<String, dynamic> toJson() => {
-        "info": info,
+        "id": id,
         "feedback_text": feedbackText,
         "total_votes": totalVotes,
       };

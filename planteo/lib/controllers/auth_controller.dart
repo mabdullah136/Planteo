@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:image_picker/image_picker.dart';
+import 'package:planteo/services/notification_services.dart';
 import 'package:planteo/utils/exports.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,10 +30,39 @@ class AuthController extends GetxController {
   get image => _image.value;
   get bio => _bio.value;
 
+  final picLoading = false.obs;
+
   @override
   void onInit() {
     getUserDetails();
     super.onInit();
+  }
+
+  pickImage(context) async {
+    try {
+      picLoading.value = true;
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final img = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (img == null) {
+        return;
+      }
+      final url = Uri.parse('$baseUrl/user/update/');
+      final request = http.MultipartRequest('POST', url)
+        ..files.add(await http.MultipartFile.fromPath('image', img.path))
+        ..headers['Authorization'] = 'JWT $token';
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'Image uploaded successfully');
+        getUserDetails();
+      } else {
+        Get.snackbar('Error', 'Something went wrong');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Something went wrong');
+    } finally {
+      picLoading.value = false;
+    }
   }
 
   signUP() async {
@@ -72,12 +103,21 @@ class AuthController extends GetxController {
         Get.snackbar('Error', 'Password is required');
       } else {
         final url = Uri.parse('$baseUrl/user/login/');
+        String? fcmToken;
+        await NotificationService().getFCMToken().then((value) {
+          fcmToken = value;
+          return value;
+        });
         final data = {
           'email': emailController.text.trim().toLowerCase(),
           'password': passwordController.text,
+          'fcm_token': fcmToken ?? '',
         };
 
+        log(data.toString());
+
         final response = await http.post(url, body: data);
+        log(response.body);
         if (response.statusCode == 200) {
           prefs.setString('token', jsonDecode(response.body)['token']);
           _token.value = jsonDecode(response.body)['token'];
@@ -92,6 +132,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       Get.snackbar('Error', 'Something went wrong');
+      log(e.toString());
     }
   }
 

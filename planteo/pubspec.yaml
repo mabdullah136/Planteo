@@ -45,6 +45,12 @@ dependencies:
   cached_network_image: ^3.3.1
   image_picker: ^1.1.2
   location: ^6.0.2
+  firebase_messaging: ^15.0.2
+  firebase_core: ^3.1.1
+  flutter_background_service: ^5.0.6
+  flutter_local_notifications: ^17.2.1
+  full_screen_image: ^2.0.0
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:

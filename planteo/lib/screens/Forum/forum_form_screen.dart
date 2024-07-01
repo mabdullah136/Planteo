@@ -47,12 +47,22 @@ class ForumFormScreen extends StatelessWidget {
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Center(
-                  child: Icon(
-                    Icons.add_a_photo,
-                    size: 50,
-                    color: greenColor,
-                  ),
+                child: Obx(
+                  () => controller.imgpath.value != ''
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            controller.imgpath.value,
+                            fit: BoxFit.fill,
+                          ),
+                        )
+                      : const Center(
+                          child: Icon(
+                            Icons.add_a_photo,
+                            size: 50,
+                            color: greenColor,
+                          ),
+                        ),
                 ),
               ),
             ),
@@ -69,7 +79,6 @@ class ForumFormScreen extends StatelessWidget {
             InputField(
                 title: 'Description',
                 hintText: 'Enter description here',
-                
                 controller: controller.descriptionController),
             const SizedBox(
               height: 20,

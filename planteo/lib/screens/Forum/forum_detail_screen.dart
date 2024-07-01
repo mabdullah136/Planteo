@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:planteo/controllers/forum_controller.dart';
 import 'package:planteo/utils/exports.dart';
 
@@ -95,7 +96,40 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                                         fontFamily: light,
                                         color: greyColor,
                                       ),
-                                    )
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        controller.likeFeedback(forum
+                                            .feedback[index].id
+                                            .toString());
+                                        Timer(const Duration(milliseconds: 100),
+                                            () {
+                                          setState(() {});
+                                        });
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          const Icon(
+                                            Icons.thumb_up,
+                                            color: greenColor,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            forum.feedback[index].totalVotes
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: regular,
+                                              color: blackColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               );
@@ -116,15 +150,23 @@ class _ForumDetailScreenState extends State<ForumDetailScreen> {
                           textCapitalization: TextCapitalization.sentences,
                           decoration: InputDecoration(
                             hintText: 'Enter your answer here',
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                color: kPrimaryColor,
                               ),
                             ),
                             suffixIcon: InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    controller.createFeedback(widget.id);
+                                  controller.createFeedback(widget.id);
+                                  Timer(const Duration(milliseconds: 500), () {
+                                    setState(() {});
                                   });
                                 },
                                 child: const Icon(Icons.send_rounded,
@@ -163,14 +205,24 @@ class ForumPost extends StatelessWidget {
         children: [
           Row(
             children: [
-              CachedNetworkImage(
-                imageUrl: image,
-                width: 60,
-                height: 60,
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                fit: BoxFit.cover,
+              FullScreenWidget(
+                disposeLevel: DisposeLevel.Low,
+                child: SizedBox(
+                  height: 60,
+                  width: 60,
+                  child: Center(
+                    child: ClipRRect(
+                      child: CachedNetworkImage(
+                        imageUrl: image,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 10,
@@ -179,12 +231,17 @@ class ForumPost extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    subject,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: regular,
-                      color: blackColor,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Text(
+                      subject,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontFamily: regular,
+                        color: blackColor,
+                      ),
                     ),
                   ),
                   Text(
@@ -212,38 +269,6 @@ class ForumPost extends StatelessWidget {
           ),
           const SizedBox(
             height: 10,
-          ),
-          Row(
-            children: [
-              const Icon(
-                Icons.thumb_up,
-                color: greenColor,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              const Text(
-                '12',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontFamily: regular,
-                  color: blackColor,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Icon(
-                  Icons.image,
-                  color: greenColor,
-                  size: 30,
-                ),
-              ),
-            ],
           ),
         ],
       ),
