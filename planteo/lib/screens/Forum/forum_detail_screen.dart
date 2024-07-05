@@ -217,7 +217,7 @@ class ForumPost extends StatelessWidget {
                         placeholder: (context, url) =>
                             const Center(child: CircularProgressIndicator()),
                         errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                            const Icon(Icons.image),
                         fit: BoxFit.cover,
                       ),
                     ),

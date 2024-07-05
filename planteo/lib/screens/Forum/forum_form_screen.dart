@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:planteo/controllers/forum_controller.dart';
 import 'package:planteo/utils/exports.dart';
@@ -51,8 +53,8 @@ class ForumFormScreen extends StatelessWidget {
                   () => controller.imgpath.value != ''
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            controller.imgpath.value,
+                          child: Image.file(
+                            File(controller.imgpath.value),
                             fit: BoxFit.fill,
                           ),
                         )

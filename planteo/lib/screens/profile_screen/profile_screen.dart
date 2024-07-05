@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:planteo/utils/exports.dart';
@@ -44,38 +45,65 @@ class ProfileSettingScreen extends StatelessWidget {
                   onTap: () {
                     controller.pickImage(context);
                   },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10000),
-                    child: CachedNetworkImage(
-                      imageUrl: '$baseUrl${controller.image}',
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: Obx(() {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(10000),
+                      child: controller.isLocalImageSelected.value.isEmpty
+                          ? Image.network(
+                              '$baseUrl${controller.image}',
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.person, size: 100);
+                              },
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return const CircularProgressIndicator();
+                              },
+                            )
+                          : Image.file(
+                              File(controller.isLocalImageSelected.value),
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                      // child: CachedNetworkImage(
+                      //   imageUrl: '$baseUrl${controller.image}',
+                      //   placeholder: (context, url) =>
+                      //       const CircularProgressIndicator(),
+                      //   errorWidget: (context, url, error) =>
+                      //       const Icon(Icons.person, size: 100),
+                      //   width: 100,
+                      //   height: 100,
+                      //   fit: BoxFit.cover,
+                      // ),
+                    );
+                  }),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Text(
-                  controller.name,
-                  // 'John Doe',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontFamily: bold,
+                Obx(
+                  () => Text(
+                    controller.name,
+                    // 'John Doe',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontFamily: bold,
+                    ),
                   ),
                 ),
-                Text(
-                  controller.email,
-                  // 'johndoe@gmail.com',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontFamily: regular,
-                    color: greyColor,
+                Obx(
+                  () => Text(
+                    controller.email,
+                    // 'johndoe@gmail.com',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: regular,
+                      color: greyColor,
+                    ),
                   ),
                 ),
                 const SizedBox(

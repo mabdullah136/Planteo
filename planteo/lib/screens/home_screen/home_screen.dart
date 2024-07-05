@@ -13,6 +13,8 @@ class HomeScreen extends StatelessWidget {
     final herbsController = Get.put(HerbsController());
     final locationController = Get.put(LocationController());
 
+    locationController.sendLocation();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -50,28 +52,30 @@ class HomeScreen extends StatelessWidget {
                   color: greenColor,
                 ),
               ),
-              locationController.recommendations.isEmpty
-                  ? const Text('No Recommendations')
-                  : ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: locationController.recommendations.length,
-                      itemBuilder: (context, index) {
-                        final herb = locationController
-                            .recommendations[index].data[index];
-                        log(herb.toString());
-                        return PlantListItem(
-                          id: herb.id,
-                          image: herb.image,
-                          title: herb.commonName,
-                          subtitle: herb.description,
-                          icon: Icons.arrow_forward_ios_rounded,
-                          color: Colors
-                              .primaries[index % Colors.primaries.length]
-                              .shade200,
-                        );
-                      },
-                    ),
+              Obx(
+                () => locationController.recommendations.isEmpty
+                    ? const Text('No Recommendations')
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: locationController.recommendations.length,
+                        itemBuilder: (context, index) {
+                          final herb =
+                              locationController.recommendations[index].data[0];
+                          log(herb.toString());
+                          return PlantListItem(
+                            id: herb.id,
+                            image: herb.image,
+                            title: herb.commonName,
+                            subtitle: herb.description,
+                            icon: Icons.arrow_forward_ios_rounded,
+                            color: Colors
+                                .primaries[index % Colors.primaries.length]
+                                .shade200,
+                          );
+                        },
+                      ),
+              ),
               const SizedBox(height: 20), // Add spacing between lists
               const Text(
                 'All Plants',

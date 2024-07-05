@@ -136,7 +136,7 @@ class ForumController extends GetxController {
       log(response.body);
 
       if (response.statusCode == 200) {
-        Get.snackbar('Success', 'Feedback liked successfully');
+        // Get.snackbar('Success', 'Feedback liked successfully');
       } else {
         Get.snackbar('Error', 'Something went wrong');
       }
@@ -197,7 +197,7 @@ class ForumController extends GetxController {
         final response = await http.Response.fromStream(streamedResponse);
 
         if (response.statusCode == 201) {
-          Get.snackbar('Success', 'Forum created successfully');
+          // Get.snackbar('Success', 'Forum created successfully');
           titleController.clear();
           descriptionController.clear();
           imgpath.value = '';
@@ -244,7 +244,7 @@ class ForumController extends GetxController {
 
       log(response.body);
       if (response.statusCode == 200) {
-        Get.snackbar('Success', 'Forum liked successfully');
+        // Get.snackbar('Success', 'Forum liked successfully');
         getForumDetail(id);
       } else {
         Get.snackbar('Error', 'Something went wrong');
@@ -272,7 +272,7 @@ class ForumController extends GetxController {
 
         log(response.body);
         if (response.statusCode == 201) {
-          Get.snackbar('Success', 'Feedback created successfully');
+          // Get.snackbar('Success', 'Feedback created successfully');
           feebackController.clear();
           getForumDetail(id);
         } else {

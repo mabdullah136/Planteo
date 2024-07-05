@@ -28,6 +28,27 @@ class HerbsController extends GetxController {
     }
   }
 
+  Stream<HerbsModel> getHerbWithIcons() async* {
+    try {
+      isLoading(true);
+      final url = Uri.parse('$baseUrl/herb/list/');
+
+      final response = await http.get(url);
+      // log(response.body);
+      if (response.statusCode == 200) {
+        final herbs = herbsModelFromJson(response.body);
+        yield herbs;
+      } else {
+        // Handle the error case
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+      log(e.toString());
+    } finally {
+      isLoading(false);
+    }
+  }
+
   Stream<HerbDetailModel> getHerbDetail(String id) async* {
     try {
       isLoading(true);

@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:planteo/firebase_options.dart';
-import 'package:planteo/services/location_services.dart';
 import 'package:planteo/services/notification_services.dart';
 import 'package:planteo/utils/exports.dart';
 
@@ -12,8 +11,8 @@ Future<void> main() async {
   );
   await NotificationService().initNotifications();
   await NotificationService().startBackgroundService();
-  await NotificationService().getFCMToken();
-  await LocationServices.getLocation();
+  // await NotificationService().getFCMToken();
+  // await LocationServices.getLocation();
   FirebaseMessaging.onMessage.listen(NotificationService().handleNotification);
 
   runApp(const MyApp());

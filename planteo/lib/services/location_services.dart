@@ -40,7 +40,7 @@ class LocationServices {
     long = locationData.longitude!;
     controller.lat.value = lat.toString();
     controller.long.value = long.toString();
-    controller.sendLocation();
+    // controller.sendLocation();
     log('Latitude: $lat, Longitude: $long');
     return locationData;
   }

@@ -100,12 +100,14 @@ class Datum {
   String commonName;
   String description;
   String image;
+  String icons;
 
   Datum({
     required this.id,
     required this.commonName,
     required this.description,
     required this.image,
+    required this.icons,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -113,6 +115,7 @@ class Datum {
         commonName: json["common_name"],
         description: json["description"],
         image: json["image"],
+        icons: json["icons"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -120,5 +123,6 @@ class Datum {
         "common_name": commonName,
         "description": description,
         "image": image,
+        "icons": icons,
       };
 }

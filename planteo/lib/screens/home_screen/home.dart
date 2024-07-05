@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:planteo/screens/Forum/form_screen.dart';
-import 'package:planteo/screens/garden_screen/garden_screen.dart';
+import 'package:planteo/screens/garden_screen/add_garden.dart';
 import 'package:planteo/utils/exports.dart';
 
 class Home extends StatelessWidget {
@@ -9,7 +9,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //init home controller
     var controller = Get.put(HomeController());
 
     var navbarItem = [
@@ -26,7 +25,7 @@ class Home extends StatelessWidget {
     var navBody = [
       const HomeScreen(),
       const ForumScreen(),
-      GardenGridScreen(),
+      const AddGarden(),
       const ProfileSettingScreen(),
     ];
 
