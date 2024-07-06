@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 import firebase_admin
 from firebase_admin import messaging, credentials
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 cred = credentials.Certificate('user/planteo-62da6-firebase-adminsdk-srgbd-4ae3614662.json')
 firebase_admin.initialize_app(cred)
@@ -113,7 +114,7 @@ class QueryViewSet(generics.RetrieveAPIView):
                 user_serializer = UserShortDetailSerializer(user)
                 query_serializer = self.get_serializer(query)
                 upload_date_diff = get_time_diff(query.upload_date)
-                feedback = Feedback.objects.filter(info_id=query_id)
+                feedback = Feedback.objects.filter(info_id=query_id).order_by('-total_votes')
                 feedback_serializer = FeedbackTextSerializer(feedback, many=True)
                 response_data = user_serializer.data
                 query_data = query_serializer.data
@@ -139,7 +140,10 @@ class CreateFeedbackViewSet(generics.ListCreateAPIView):
         feedback_instance = serializer.instance  
         info_id = feedback_instance.info_id  
         user_id=UserSubmittedImage.objects.get(pk=info_id)
+        # if(user_id.user.id != )
         send_notification(user_id.user.id, "New Feedback on Your Query", feedback_instance.feedback_text)
+        # if feedback_instance.user != user_id:
+        #     send_notification(user_id.id, "New Feedback on Your Query", feedback_instance.feedback_text)
         
 
     def create(self, request, *args, **kwargs):
@@ -159,6 +163,7 @@ class CreateVoteViewSet(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         feedback_info_id = request.data.get('feedback_info')
         user = request.user
+        print(user)
         if not feedback_info_id:
             return Response({'error': 'feedback_info_id is required'}, status=status.HTTP_400_BAD_REQUEST)
         try:
@@ -183,16 +188,18 @@ class CreateVoteViewSet(generics.CreateAPIView):
                 return Response({'message': 'Vote status toggled successfully', 'total_votes': total_votes}, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+from django.db.models import QuerySet
+from rest_framework.status import HTTP_404_NOT_FOUND
 
 
 class ListOfUserQueryViewSet(generics.ListAPIView):
     serializer_class = UserQuerySerializer
     permission_classes = [IsQueryOwner]
-    def get_queryset(self):
-        search = self.request.GET.get('search')
-        if search:
-            queryset = UserSubmittedImage.objects.filter(subject__icontains=search)
+
+    def get_queryset(self) -> QuerySet:
+        search_query: str = self.request.GET.get('search')
+        if search_query:
+            queryset = UserSubmittedImage.objects.filter(subject__icontains=search_query)
         else:
             queryset = UserSubmittedImage.objects.all()
         return queryset
@@ -200,5 +207,5 @@ class ListOfUserQueryViewSet(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         if not queryset.exists():
-            return Response({'message': 'No queries found.'}, status=status.HTTP_204_NO_CONTENT)
+            return Response({'error': 'No queries found'}, status=HTTP_404_NOT_FOUND)
         return super().list(request, *args, **kwargs)

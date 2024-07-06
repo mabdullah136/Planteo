@@ -47,6 +47,7 @@ def login_view(request):
         email_or_username = request.data.get('email')
         password = request.data.get('password')
         fcm_token = request.data.get('fcm_token')
+        print(fcm_token)
         if not email_or_username or not password:
             return Response({'error': 'Please provide both email or username and password.'}, status=status.HTTP_400_BAD_REQUEST)
         if '@' in email_or_username:
@@ -130,6 +131,8 @@ class ForgetPassword(generics.UpdateAPIView):
     def put(self, request, *args, **kwargs):
         email = request.data.get('email')
         new_password = request.data.get('password')
+        print(email)
+        print(new_password)
         if not email or not new_password:
             return Response({'error':('Please provide both email and password.')}, status=status.HTTP_400_BAD_REQUEST)
         try:
@@ -209,3 +212,28 @@ def update_user(request):
             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
     else:
         return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+from google.oauth2 import id_token
+from google.auth.transport import requests
+    
+class GoogleLogin(APIView):
+    def post(self, request):
+        token = request.data.get('id_token')
+        try:
+            idinfo = id_token.verify_oauth2_token(token, requests.Request(), settings.GOOGLE_CLIENT_ID)
+            if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+                raise ValueError('Wrong issuer.')
+
+            # Get or create the user
+            email = idinfo['email']
+            user, created = User.objects.get_or_create(email=email, defaults={'username': email})
+
+            # Generate JWT tokens
+            refresh = RefreshToken.for_user(user)
+
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        except ValueError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)

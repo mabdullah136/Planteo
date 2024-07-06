@@ -10,8 +10,8 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('username', 'password1', 'password2', 'email', 'first_name', 'last_name','phone','image'),
         }),
     )
-    list_display=['username','email','image']
-    list_editable = ['image','email'] 
+    list_display=['username','email','image','fcm_token']
+    list_editable = ['image','email','fcm_token'] 
 
 
 @admin.register(UserSubmittedImage)

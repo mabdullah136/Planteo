@@ -17,5 +17,5 @@ urlpatterns=[
     path('feedback/like/',feedback_views.CreateVoteViewSet.as_view(),name='like_query_feedback'),
     path('queries/<int:query_id>/', feedback_views.QueryViewSet.as_view(), name='query-detail'),
 
-    
+    path('api/google-login/', user_views.GoogleLogin.as_view(), name='google_login'),
 ]
