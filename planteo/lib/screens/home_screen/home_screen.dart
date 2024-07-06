@@ -1,11 +1,20 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:planteo/controllers/herbs_controller.dart';
+import 'package:planteo/controllers/location_controller.dart';
 import 'package:planteo/utils/exports.dart';
-import 'package:planteo/utils/lists.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final herbsController = Get.put(HerbsController());
+    final locationController = Get.put(LocationController());
+
+    locationController.sendLocation();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -28,24 +37,85 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return PlantListItem(
-                      image: homeScreenList[index]['image'] as String,
-                      title: homeScreenList[index]['title'] as String,
-                      subtitle: homeScreenList[index]['subtitle'] as String,
-                      icon: homeScreenList[index]['icon'] as IconData,
-                      color: homeScreenList[index]['color'] as Color,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Recommended Plants',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: semiBold,
+                  color: greenColor,
+                ),
+              ),
+              Obx(
+                () => locationController.recommendations.isEmpty
+                    ? const Text('No Recommendations')
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: locationController.recommendations.length,
+                        itemBuilder: (context, index) {
+                          final herb =
+                              locationController.recommendations[index].data[0];
+                          log(herb.toString());
+                          return PlantListItem(
+                            id: herb.id,
+                            image: herb.image,
+                            title: herb.commonName,
+                            subtitle: herb.description,
+                            icon: Icons.arrow_forward_ios_rounded,
+                            color: Colors
+                                .primaries[index % Colors.primaries.length]
+                                .shade200,
+                          );
+                        },
+                      ),
+              ),
+              const SizedBox(height: 20), // Add spacing between lists
+              const Text(
+                'All Plants',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: semiBold,
+                  color: greenColor,
+                ),
+              ),
+              StreamBuilder<HerbsModel>(
+                stream: herbsController.getHerbs(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
-                  }),
-            ),
-          ],
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data!.data.length,
+                      itemBuilder: (context, index) {
+                        final herb = snapshot.data!.data[index];
+                        return PlantListItem(
+                          id: herb.id,
+                          image: herb.image,
+                          title: herb.commonName,
+                          subtitle: herb.description,
+                          icon: Icons.arrow_forward_ios_rounded,
+                          color: Colors
+                              .primaries[index % Colors.primaries.length]
+                              .shade200,
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

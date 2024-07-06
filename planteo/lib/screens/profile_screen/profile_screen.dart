@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:planteo/utils/exports.dart';
@@ -12,7 +13,23 @@ class ProfileSettingScreen extends StatelessWidget {
     log(controller.name);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Profile'),
+        title: const Text(
+          'My Profile',
+          style: TextStyle(
+            fontSize: 28,
+            fontFamily: regular,
+            color: greenColor,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              controller.logout();
+            },
+            icon: const Icon(Icons.logout_rounded),
+            tooltip: 'Logout',
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -24,36 +41,69 @@ class ProfileSettingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10000),
-                  child: CachedNetworkImage(
-                    imageUrl: 'https://via.placeholder.com/150',
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    width: 100,
-                    fit: BoxFit.cover,
-                  ),
+                InkWell(
+                  onTap: () {
+                    controller.pickImage(context);
+                  },
+                  child: Obx(() {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(10000),
+                      child: controller.isLocalImageSelected.value.isEmpty
+                          ? Image.network(
+                              '$baseUrl${controller.image}',
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.person, size: 100);
+                              },
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return const CircularProgressIndicator();
+                              },
+                            )
+                          : Image.file(
+                              File(controller.isLocalImageSelected.value),
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                      // child: CachedNetworkImage(
+                      //   imageUrl: '$baseUrl${controller.image}',
+                      //   placeholder: (context, url) =>
+                      //       const CircularProgressIndicator(),
+                      //   errorWidget: (context, url, error) =>
+                      //       const Icon(Icons.person, size: 100),
+                      //   width: 100,
+                      //   height: 100,
+                      //   fit: BoxFit.cover,
+                      // ),
+                    );
+                  }),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  // controller.name,
-                  'John Doe',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: bold,
+                Obx(
+                  () => Text(
+                    controller.name,
+                    // 'John Doe',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontFamily: bold,
+                    ),
                   ),
                 ),
-                const Text(
-                  // controller.email,
-                  'johndoe@gmail.com',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: regular,
-                    color: greyColor,
+                Obx(
+                  () => Text(
+                    controller.email,
+                    // 'johndoe@gmail.com',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: regular,
+                      color: greyColor,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -75,14 +125,14 @@ class ProfileSettingScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                InputField(
-                  title: 'Email',
-                  hintText: 'Enter your email',
-                  controller: controller.emailController,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                // InputField(
+                //   title: 'Email',
+                //   hintText: 'Enter your email',
+                //   controller: controller.emailController,
+                // ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
                 InputField(
                   title: 'Phone',
                   hintText: 'Enter your phone number',
@@ -98,7 +148,7 @@ class ProfileSettingScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // controller.updateProfile();
+                      controller.updateProfile();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kPrimaryColor,

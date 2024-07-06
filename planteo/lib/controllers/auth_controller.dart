@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:image_picker/image_picker.dart';
+import 'package:planteo/services/notification_services.dart';
 import 'package:planteo/utils/exports.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,22 +18,54 @@ class AuthController extends GetxController {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
 
+  final isLocalImageSelected = ''.obs;
+
   final _name = ''.obs;
   final _token = ''.obs;
   final _email = ''.obs;
-  final _image = ''.obs;
+  final image = ''.obs;
   final _bio = ''.obs;
 
   get name => _name.value;
   get token => _token.value;
   get email => _email.value;
-  get image => _image.value;
+  // get image => _image.value;
   get bio => _bio.value;
+
+  final picLoading = false.obs;
 
   @override
   void onInit() {
     getUserDetails();
     super.onInit();
+  }
+
+  pickImage(context) async {
+    try {
+      picLoading.value = true;
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final img = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (img == null) {
+        return;
+      }
+      isLocalImageSelected.value = img.path;
+      final url = Uri.parse('$baseUrl/user/update/');
+      final request = http.MultipartRequest('POST', url)
+        ..files.add(await http.MultipartFile.fromPath('image', img.path))
+        ..headers['Authorization'] = 'JWT $token';
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        // Get.snackbar('Success', 'Image uploaded successfully');
+        getUserDetails();
+      } else {
+        Get.snackbar('Error', 'Something went wrong');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Something went wrong');
+    } finally {
+      picLoading.value = false;
+    }
   }
 
   signUP() async {
@@ -52,7 +86,7 @@ class AuthController extends GetxController {
 
         final response = await http.post(url, body: data);
         if (response.statusCode == 201) {
-          Get.snackbar('Success', 'User created successfully');
+          // Get.snackbar('Success', 'User created successfully');
           Get.to(() => const LoginScreen());
         } else {
           Get.snackbar('Error', 'Something went wrong');
@@ -72,26 +106,36 @@ class AuthController extends GetxController {
         Get.snackbar('Error', 'Password is required');
       } else {
         final url = Uri.parse('$baseUrl/user/login/');
+        String? fcmToken;
+        await NotificationService().getFCMToken().then((value) {
+          fcmToken = value;
+          return value;
+        });
         final data = {
           'email': emailController.text.trim().toLowerCase(),
           'password': passwordController.text,
+          'fcm_token': fcmToken ?? '',
         };
 
+        log(data.toString());
+
         final response = await http.post(url, body: data);
+        log(response.body);
         if (response.statusCode == 200) {
           prefs.setString('token', jsonDecode(response.body)['token']);
           _token.value = jsonDecode(response.body)['token'];
-          Get.snackbar('Success', 'Login successful');
+          // Get.snackbar('Success', 'Login successful');
           getUserDetails();
           clearControllers();
           // Get.offAll(() => const Home());
-          Get.offAll(() => const HomeScreen());
+          Get.offAll(() => const Home());
         } else {
           Get.snackbar('Error', jsonDecode(response.body)['error']);
         }
       }
     } catch (e) {
       Get.snackbar('Error', 'Something went wrong');
+      log(e.toString());
     }
   }
 
@@ -118,9 +162,11 @@ class AuthController extends GetxController {
           phoneController.text = jsonDecode(response.body)['phone'];
         }
         if (jsonDecode(response.body)['image'] != null) {
-          _image.value = jsonDecode(response.body)['image'];
+          image.value = jsonDecode(response.body)['image'];
+          update();
+          // image = jsonDecode(response.body)['image'];
         } else {
-          _image.value = '';
+          image.value = '';
         }
         _bio.value = jsonDecode(response.body)['bio'];
       } else {
@@ -213,5 +259,39 @@ class AuthController extends GetxController {
     confirmPasswordController.clear();
     nameController.clear();
     otpController.clear();
+  }
+
+  logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('token');
+    Get.offAll(() => const LoginScreen());
+  }
+
+  updateProfile() async {
+    try {
+      if (firstNameController.text.isEmpty) {
+        Get.snackbar('Error', 'First name required');
+        return;
+      }
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final body = {
+        'first_name': firstNameController.text,
+        'last_name': lastNameController.text,
+        // 'email': emailController.text,
+        'phone': phoneController.text
+      };
+      final url = Uri.parse('$baseUrl/user/update/');
+      final response = await http.post(url, body: body, headers: {
+        'Authorization': 'JWT $token',
+      });
+      if (response.statusCode == 200) {
+        Get.snackbar('Success', 'Record updated successfully');
+      } else {
+        Get.snackbar('Error', 'Something went wrong');
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
   }
 }

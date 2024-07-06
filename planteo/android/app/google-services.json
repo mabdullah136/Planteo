@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "712667756883",
+    "project_id": "planteo-62da6",
+    "storage_bucket": "planteo-62da6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712667756883:android:e61545978467017370c9a6",
+        "android_client_info": {
+          "package_name": "com.codenust.planteo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZBxyDQ5w_6FhP5MvyA5QTgPVKurl9IRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
