@@ -78,47 +78,48 @@ def plant_recommendation_view(request):
 
     return JsonResponse({"error": "Unsupported method."}, status=405)
 
-# class HerbListView(APIView):
-#     def get(self, request, *args, **kwargs):
-#         try:
-#             herbs = Herb.objects.all()
-#             serializer = HerbListSerializer(herbs, many=True)
-#             data_with_img = []
-
-#             for herb in serializer.data:
-#                 data_with_img.append(herb)
-
-#             return Response({
-#                 'status': 'success',
-#                 'data': data_with_img
-#             }, status=status.HTTP_200_OK)
-#         except Exception as e:
-#             return Response({
-#                 'status': 'error',
-#                 'message': str(e)
-#             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 class HerbListView(APIView):
     def get(self, request, *args, **kwargs):
         try:
-            page = request.query_params.get('page', 1)
-            cache_key = f'herb_list_page_{page}'
-            herbs_data = cache.get(cache_key)
-            if herbs_data:
-                print("Data loaded from cache")
-                return Response(herbs_data, status=status.HTTP_200_OK)
-            herbs = Herb.objects.order_by('id')  
-            paginator = PageNumberPagination()
-            paginated_herbs = paginator.paginate_queryset(herbs, request)
-            serializer = HerbListSerializer(paginated_herbs, many=True)
-            herbs_data = paginator.get_paginated_response(serializer.data).data
-            cache.set(cache_key, herbs_data, timeout=60*60*24)
-            return Response(herbs_data, status=status.HTTP_200_OK)
+            herbs = Herb.objects.all()
+            serializer = HerbListSerializer(herbs, many=True)
+            data_with_img = []
+
+            for herb in serializer.data:
+                data_with_img.append(herb)
+
+            return Response({
+                'status': 'success',
+                'data': data_with_img
+            }, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({
                 'status': 'error',
                 'message': str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# class HerbListView(APIView):
+#     def get(self, request, *args, **kwargs):
+#         try:
+#             page = request.query_params.get('page', 1)
+#             cache_key = f'herb_list_page_{page}'
+#             herbs_data = cache.get(cache_key)
+#             if herbs_data:
+#                 print("Data loaded from cache")
+#                 return Response(herbs_data, status=status.HTTP_200_OK)
+#             herbs = Herb.objects.order_by('id')  
+#             paginator = PageNumberPagination()
+#             paginated_herbs = paginator.paginate_queryset(herbs, request)
+#             serializer = HerbListSerializer(paginated_herbs, many=True)
+#             herbs_data = paginator.get_paginated_response(serializer.data).data
+#             cache.set(cache_key, herbs_data, timeout=60*60*24)
+#             return Response(herbs_data, status=status.HTTP_200_OK)
+#         except Exception as e:
+#             return Response({
+#                 'status': 'error',
+#                 'message': str(e)
+#             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
         
 class HerbDetailView(APIView):
     def post(self, request, *args, **kwargs):

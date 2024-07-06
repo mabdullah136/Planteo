@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'django_crontab',
     'herb',
+    'rest_framework_simplejwt',
+    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +61,14 @@ MIDDLEWARE = [
 
 CRONJOBS = [
     ('*/1 * * * *', 'user.cron.delete_otp'),
+    ('*/1 * * * *', 'herb.cron.send_notification'),
 ]
+
+# CRON_CLASSES = [
+#     "user.cron.DeleteOTPCronJob",
+#     "herb.cron.SendNotificationCronJob",
+# ]
+
 
 ROOT_URLCONF = 'planteo.urls'
 
@@ -138,8 +147,8 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK={
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,  
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 10,  
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
@@ -161,6 +170,8 @@ SIMPLE_JWT = {
    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1), 
 }
+
+GOOGLE_CLIENT_ID = 'your-google-client-id.apps.googleusercontent.com'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
